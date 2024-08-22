@@ -9,6 +9,10 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+
+	"github.com/tdewolff/minify"
+	"github.com/tdewolff/minify/css"
+	"github.com/tdewolff/minify/js"
 )
 
 func main() {
@@ -77,7 +81,7 @@ func copyAssets(theme string) error {
 	if err != nil {
 		return fmt.Errorf("failed to list CSS files: %w", err)
 	}
-	if err := copyFiles(cssFiles, "assets/css"); err != nil {
+	if err := minifyAndCopyFiles(cssFiles, "assets/css", "text/css"); err != nil {
 		return fmt.Errorf("failed to copy css files: %w", err)
 	}
 
@@ -85,7 +89,7 @@ func copyAssets(theme string) error {
 	if err != nil {
 		return fmt.Errorf("failed to list JS files: %w", err)
 	}
-	if err := copyFiles(jsFiles, "assets/js"); err != nil {
+	if err := minifyAndCopyFiles(jsFiles, "assets/js", "text/javascript"); err != nil {
 		return fmt.Errorf("failed to copy js files: %w", err)
 	}
 
@@ -117,6 +121,37 @@ func copyFiles(files []string, outputDir string) error {
 
 		if _, err := io.Copy(outFile, bytes.NewReader(data)); err != nil {
 			return fmt.Errorf("failed to copy data to %s: %w", outputPath, err)
+		}
+	}
+
+	return nil
+}
+
+func minifyAndCopyFiles(files []string, destDir string, fileType string) error {
+	m := minify.New()
+	switch fileType {
+	case "text/javascript":
+		m.AddFunc("text/javascript", js.Minify)
+	case "text/css":
+		m.AddFunc("text/css", css.Minify)
+	default:
+		return fmt.Errorf("unsupported file type: %s", fileType)
+	}
+
+	for _, file := range files {
+		content, err := os.ReadFile(file)
+		if err != nil {
+			return fmt.Errorf("failed to read file %s: %w", file, err)
+		}
+
+		minifiedContent, err := m.Bytes(fileType, content)
+		if err != nil {
+			return fmt.Errorf("failed to minify file %s: %w", file, err)
+		}
+
+		destPath := filepath.Join(destDir, filepath.Base(file))
+		if err := os.WriteFile(destPath, minifiedContent, os.ModePerm); err != nil {
+			return fmt.Errorf("failed to write minified file to %s: %w", destPath, err)
 		}
 	}
 
