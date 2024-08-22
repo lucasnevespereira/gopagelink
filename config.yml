@@ -1,0 +1,21 @@
+name: "Lucas Neves Pereira"
+picture: "picture.jpg" # paste an img at root of project or an image source url
+bio: "Software Engineer from Portugal living in Paris, France"
+meta:
+  lang: "en"
+  description: "Software Engineer from Portugal living in Paris, France"
+  title: "Lucas Neves Pereira"
+  author: "Lucas Neves Pereira"
+  siteUrl: "https://lucasnevespereira.github.io"
+links:
+  - name: "Github"
+    url: "https://github.com/lucasnevespereira"
+  - name: "LinkedIn"
+    url: "https://www.linkedin.com/in/lucasnevespereira/"
+  - name: "Youtube"
+    url: "https://www.youtube.com/c/lucaasnp"
+  - name: "Twitter/X"
+    url: "https://twitter.com/lucaasnp_"
+  - name: "Dev.to"
+    url: "https://dev.to/lucasnevespereira"
+theme: "custom"

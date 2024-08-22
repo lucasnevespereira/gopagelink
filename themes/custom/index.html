@@ -1,0 +1,50 @@
+<html lang="{{.Config.Meta.Lang}}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initialscale=1.0" />
+    <meta name="description" content="{{.Config.Meta.Description}}" />
+    <title>{{.Config.Meta.Title}}</title>
+    <meta name="author" content="{{.Config.Meta.Author}}" />
+    <link rel="canonical" href="{{.Config.Meta.SiteUrl}}" />
+    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
+    <link rel="shortcut icon" href="/assetsicons/favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+    />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+
+    <meta property="og:title" content="{{.Config.Meta.Title}}" />
+    <meta property="og:site_name" content="{{.Config.Meta.Title}}" />
+    <meta property="og:description" content="{{.Config.Meta.Description}}" />
+    <meta property="og:locale" content="{{.Config.Meta.Lang}}" />
+
+    <meta name="twitter:title" content="{{.Config.Meta.Title}}" />
+    <meta name="twitter:description" content="{{.Config.Meta.Description}}" />
+    <meta name="language" content="{{.Config.Meta.Lang}}" />
+  </head>
+  <body>
+    <header>
+      <img src="{{.Config.Picture}}" alt="Picture" class="avatar" />
+      <h1>{{.Config.Name}}</h1>
+      <small class="bio">{{.Config.Bio}}</small>
+    </header>
+    <main>
+      <section class="links">
+        {{range .Config.Links}}
+        <a
+          class="link-item"
+          href="{{.URL}}"
+          target="_blank"
+          rel="noopener noreferrer"
+          ><p>{{.Name}}</p>
+        </a>
+        {{end}}
+      </section>
+    </main>
+    <footer>
+      <small>© <span class="year"></span> {{.Config.Meta.Author}} </small>
+    </footer>
+    <script src="/assets/js/script.js"></script>
+  </body>
+</html>
